@@ -1,0 +1,56 @@
+<html>
+	<head>
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="underscore-min.js"></script>
+		<script type="text/javascript" src="popup.js"></script>
+
+		<style type="text/css">
+			body { 
+				background-color: #CECECE; 
+				color: #030000; 
+				font-family: verdana; 
+				font-size:  10px; 
+				width: 200px;
+			}
+
+			.theTitle {
+				font-weight: bold;
+				font-size: 14px;
+			}
+
+			ul.ignoredUsers{
+				list-style: none;
+			}
+
+			.remove_blocked_user {
+				margin-right: 5px;
+			}
+
+			.blocked_user_name {
+				font-weight: bold;
+			}
+
+			.userNameField {
+				display: inline;
+			}
+
+			.addToListButton {
+				display: inline;
+  				margin-left: 5px;
+			}
+
+		</style>
+
+	</head>
+
+	<body>
+		
+		<div class="theTitle">NTMTO Mute Button</div>
+
+		<ul class="ignoredUsers"></ul>
+
+		<input class="userNameField" type="text"/><input class="addToListButton" type="button" value="+">
+
+	</body>
+
+</html>
