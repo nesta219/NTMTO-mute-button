@@ -36,13 +36,13 @@ jQuery(document).ready(function() {
 	}
 
 	function unblockUser(userNameToRemove) {
-		chrome.storage.sync.get('userList', function(storageObj) {
+		chrome.storage.local.get('userList', function(storageObj) {
 
 			userList = storageObj.userList;
 
 			userList = _.without(userList, userNameToRemove);
 
-			chrome.storage.sync.set({userList : userList}, function() {
+			chrome.storage.local.set({userList : userList}, function() {
     			
 	    		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 				    var activeTab = tabs[0];
@@ -92,7 +92,7 @@ jQuery(document).ready(function() {
 	    		userList.push(newUserToBlock);
 	    	}
 
-	    	chrome.storage.sync.set({userList : userList}, function() {
+	    	chrome.storage.local.set({userList : userList}, function() {
     			$userNameField.val('');
     			displayBlockedUsers(userList);
 
@@ -103,7 +103,7 @@ jQuery(document).ready(function() {
 	}
 
 	//get all users already blocked and show them in popup
-	chrome.storage.sync.get('userList', function(storageObj) {
+	chrome.storage.local.get('userList', function(storageObj) {
 
 		userList = storageObj.userList;
 

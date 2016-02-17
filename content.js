@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 function hideMessages() {
 
-	chrome.storage.sync.get('userList', function(storageObj) {
+	chrome.storage.local.get('userList', function(storageObj) {
 		//to search for user names
 		//jQuery(jQuery('.tr2thread')[0]).find('strong')
 
