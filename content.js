@@ -1,7 +1,9 @@
+console.log('start content.js');
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    
+    console.log('listening for run_block_function');
+
     if( request.message === "run_block_function" ) {
-      
+		console.log('run_block_function found');
     	hideMessages();
 
     }
@@ -9,8 +11,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 function hideMessages() {
-
+	console.log('hide messages start');
 	chrome.storage.local.get('userList', function(storageObj) {
+		console.log('storage accessed');
+		console.log(storageObj.userList);
 		//to search for user names
 		//jQuery(jQuery('.tr2thread')[0]).find('strong')
 
@@ -27,6 +31,8 @@ function hideMessages() {
 
 			if(_.indexOf(userList, postHeaderName) !== -1) {
 				//we have a match
+				console.log('post header name found: ' + postHeaderName);
+
 				var $postContent = $postHeader.parents('tr').next('tr').find('td.tr1');
 
 				$postContent.css('display', 'none');
@@ -63,10 +69,12 @@ function hideMessages() {
 		}
 
 	});
+	console.log('hide messages end');
 
 }
 
 jQuery(document).ready(function(){
+	console.log('doc ready');
 	hideMessages();
 });
 

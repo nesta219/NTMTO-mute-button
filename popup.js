@@ -1,3 +1,4 @@
+console.log('start popup.js');
 var userList;
 
 var $ignoredUserUL;
@@ -5,13 +6,15 @@ var $addButton;
 var $userNameField;
 
 jQuery(document).ready(function() {
+	console.log('popup.js doc ready');
 	//cache jquery refs
 	$ignoredUserUL = jQuery('.ignoredUsers');
 	$addButton = jQuery('.addToListButton');
 	$userNameField = jQuery('.userNameField');
 
 	function displayBlockedUsers(aUserList) {
-
+		console.log('start display blocked users');
+		console.log('aUserList.length: '+ aUserList.length);
 		$ignoredUserUL.empty();
 
 		for(var i = 0; i < aUserList.length; i++) {
@@ -32,20 +35,28 @@ jQuery(document).ready(function() {
 			});
 
 		}
+		console.log('end display blocked users');
 
 	}
 
 	function unblockUser(userNameToRemove) {
+		console.log('begin unblockUser');
 		chrome.storage.local.get('userList', function(storageObj) {
+			console.log('storage accessed');
+			console.log(storageObj.userList);
 
 			userList = storageObj.userList;
 
 			userList = _.without(userList, userNameToRemove);
 
+			console.log('attempt to set user list in storage');
 			chrome.storage.local.set({userList : userList}, function() {
-    			
+				console.log('user list set in storage successfully');
+	    		console.log('attempt to query active tab for current window');
 	    		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+				    console.log('active tab accessed');
 				    var activeTab = tabs[0];
+				    console.log(activeTab);
 				    
 				    displayBlockedUsers(userList);
 
@@ -92,10 +103,14 @@ jQuery(document).ready(function() {
 	    		userList.push(newUserToBlock);
 	    	}
 
+    		console.log('attempting to set user list from blockUserFromInputField');
 	    	chrome.storage.local.set({userList : userList}, function() {
+    			
+    			console.log('userlist accessed: ' + userList);
     			$userNameField.val('');
     			displayBlockedUsers(userList);
 
+				console.log('sending run block function message');
 	    		chrome.tabs.sendMessage(activeTab.id, {"message": "run_block_function"});
 	    	});
 		    
@@ -103,9 +118,10 @@ jQuery(document).ready(function() {
 	}
 
 	//get all users already blocked and show them in popup
+	console.log('attempt to get user list from stoarge to show in popup');
 	chrome.storage.local.get('userList', function(storageObj) {
-
 		userList = storageObj.userList;
+		console.log('got userList: ' + userList);
 
 		if(_.isUndefined(userList)) {
 			userList = [];
